@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:58:41 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/05 22:52:42 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/06 00:26:45 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,14 @@ void	images_to_map(t_param *param)
 		{
 			if (param->map.path[i][j] == '1')
 				mlx_put_image_to_window(param->mlx.ptr, param->mlx.window, param->textures.obstacle.ptr, j * 64, i * 64);
-			else if (param->map.path[i][j] == 'C')
+			else if (param->map.path[i][j] == 'C' && param->frame < 200)
 				mlx_put_image_to_window(param->mlx.ptr, param->mlx.window, param->textures.eggo.ptr, j * 64, i * 64);
+			else if (param->map.path[i][j] == 'C' && param->frame >= 200)
+				mlx_put_image_to_window(param->mlx.ptr, param->mlx.window, param->textures.eggo_right.ptr, j * 64, i * 64);
+			else if (param->map.path[i][j] == 'C' && param->frame < 200)
+				mlx_put_image_to_window(param->mlx.ptr, param->mlx.window, param->textures.eggo_side.ptr, j * 64, i * 64);
+			else if (param->map.path[i][j] == 'C' && param->frame >= 200)
+				mlx_put_image_to_window(param->mlx.ptr, param->mlx.window, param->textures.eggo_left.ptr, j * 64, i * 64);
 			else if (param->map.path[i][j] == 'P')
 				mlx_put_image_to_window(param->mlx.ptr, param->mlx.window, param->textures.eleven_front.ptr, j * 64, i * 64);
 			else if (param->map.path[i][j] == 'E')
@@ -179,6 +185,7 @@ int	render(t_param *param)
 	if ((param->frame % 500 / 400) == 1)
 		param->frame = 0;
 	images_to_map(param);
+	ft_my_mlx_string_put(param);
 	return (0);
 }
 

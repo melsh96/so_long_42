@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 18:09:00 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/05 21:12:24 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/06 00:19:53 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,11 @@ void	move_up(t_param *param)
 		param->count.steps++;
 		ft_putnbr_fd(param->count.steps, 1);
 		ft_putchar_fd('\n', 1);
+		
 		// images_to_map(param->mlx, param->map, param->textures);
 		// images_to_map(param);
 	}
+	
 }
 
 void	move_down(t_param *param)
@@ -186,14 +188,21 @@ void	move_left(t_param *param)
 	}
 }
 
+void	ft_my_mlx_string_put(t_param *param)
+{
+	char	*str;
+
+	str = ft_itoa(param->count.steps);
+	mlx_string_put(param->mlx.ptr, param->mlx.window, 40, 50, 0xFFFFFF, str);
+	free(str);
+}
+
 int	press_key(int key_code, t_param *param)
 {
 	if (key_code == KEY_ESC)
 		quit(param);
 	else if (key_code == KEY_W)
-	{	
 		move_up(param);
-	}
 	else if (key_code == KEY_A)
 		move_left(param);
 	else if (key_code == KEY_S)

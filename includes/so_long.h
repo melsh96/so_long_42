@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:02:15 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/05 22:44:18 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/06 00:20:21 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,5 @@ void	check_walls(t_map *map);
 // void	check_params(t_map *map, t_count *count);
 void	check_params(t_param *param);
 void	check_map(t_param *param);
-
+void	ft_my_mlx_string_put(t_param *param);
 #endif
