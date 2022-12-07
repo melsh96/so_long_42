@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 18:04:23 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/06 00:26:39 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:52:00 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	param_init(t_param *param)
 {
 	param->x = 3;
 	param->y = 4;
+	param->i = 0;
+	param->j = 0;
 	param->count.steps = 0;
 	param->mlx.ptr = NULL;
 	param->mlx.window = NULL;
@@ -26,6 +28,7 @@ void	param_init(t_param *param)
 void	initialize_img(t_textures *textures, t_mlx *mlx)
 {
 	int			i;
+	int			fd;
 	t_img		*image;
 	static char	*files[] = {
 		"./img/floor.xpm",
@@ -45,9 +48,17 @@ void	initialize_img(t_textures *textures, t_mlx *mlx)
 		NULL
 	};
 
+	fd = 0;
 	i = 0;
 	while (files[i] != NULL)
 	{
+		fd = open(files[i], O_RDONLY);
+		if (fd < 0 || check_arguments(files[i], ".xpm") != 0)
+		{
+			ft_putstr_fd("Error\nImage Problem\n", 2);
+			exit(0);
+		}
+		close(fd);
 		image = &((t_img *)textures)[i];
 		image->ptr = mlx_xpm_file_to_image(mlx->ptr, files[i],
 				&image->width, &image->height);
@@ -55,16 +66,41 @@ void	initialize_img(t_textures *textures, t_mlx *mlx)
 	}
 }
 
+void	init_player_pos(t_param *param)
+{
+	int	i_index;
+	int	j_index;
+
+	i_index = 0;
+	while (param->map.path[i_index] != NULL)
+	{
+		j_index = 0;
+		while (param->map.path[i_index][j_index])
+		{
+			if (param->map.path[i_index][j_index] == 'P')
+				break;
+			j_index++;
+		}
+		if (j_index != param->map.width + 1)
+			break ;
+		i_index++;
+	}
+	param->p_pos.pos_x = i_index;
+	param->p_pos.pos_y = j_index;
+}
+
 void	initialize_game(t_param	*param, char *map_path)
 {
 	param->mlx.ptr = mlx_init();
 	if (!param->mlx.ptr)
 	{
+		ft_putstr_fd("Error\n", 2);
 		exit(0);
 	}
 	initialize_img(&param->textures, &param->mlx);
-	read_map(map_path, &param->map);
-	check_map(param);
+	read_map(map_path, param);
+	init_player_pos(param);
+	check_map(param, map_path);
 	param->mlx.window = mlx_new_window(param->mlx.ptr, param->map.width * 64, param->map.height * 64, "so_long");
 	images_to_map(param);
 }

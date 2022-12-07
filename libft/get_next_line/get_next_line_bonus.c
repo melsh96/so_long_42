@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:03:03 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/11/15 15:43:40 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:01:22 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	stash_to_line(t_list *stash, char **line)
 }
 
 // TODO	3 : clear the stash
-static void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
 	t_list	*to_clear;
 	t_list	*next;

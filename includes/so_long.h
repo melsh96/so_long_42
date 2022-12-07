@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:02:15 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/06 00:20:21 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/07 20:27:30 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct	s_map
 	// int		line;
 	// char	*path;
 	char	**path;
+	char	**visited_path;
 	int 	width;
 	int 	height;
 }			t_map;
@@ -88,16 +89,26 @@ typedef struct	s_count
 	int		steps;
 }				t_count;
 
+typedef struct s_player_pos
+{
+	unsigned int	pos_x;
+	unsigned int	pos_y;
+}	t_player_pos;
+
+
 typedef struct	s_param
 {
 	int			x;
 	int			y;
+	int			i;
+	int			j;
 	int			frame;
 	t_mlx		mlx;
 	t_map		map;
 	t_img		img;
 	t_textures	textures;
 	t_count		count;
+	t_player_pos	p_pos;
 }				t_param;
 
 int		main(int ac, char **av);
@@ -113,12 +124,16 @@ void	move_up(t_param *param);
 void	initialize_game(t_param	*param, char *map_path);
 int		quit(t_param *param);
 void	param_init(t_param *param);
-void	read_map(char *map_path, t_map *map);
+void	read_map(char *map_path, t_param *param);
 // void	images_to_map(t_mlx *mlx, t_map *map, t_textures *textures);
 void	images_to_map(t_param *param);
 void	check_walls(t_map *map);
 // void	check_params(t_map *map, t_count *count);
 void	check_params(t_param *param);
-void	check_map(t_param *param);
-void	ft_my_mlx_string_put(t_param *param);
+void	check_map(t_param *param, char *map_path);
+void	display_steps_on_screen(t_param *param);
+int		check_arguments(char *av, char *c);
+// void	find_player(t_param *param, int i, int j);
+void	find_player(t_param *param, char *map_path);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:07:16 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/11/15 15:40:17 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:15:12 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <fcntl.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
+#  define BUFFER_SIZE 1
 # endif
 
 typedef struct s_list
@@ -37,9 +37,11 @@ void	read_to_stash(int fd, t_list **stash);
 void	stash_to_line(t_list *stash, char **line);
 t_list	*lstnew(void *content);
 void	lstadd_back(t_list **lst, t_list *new);
-// void	ft_lstclear(t_list **lst, void (*del)(void *));
+void	ft_lstclear(t_list **lst, void (*del)(void *));
 int		check_new_line(t_list *stash);
 void	malloc_line(char **line, t_list *stash);
 void	new_line_exists(t_list	*to_clear);
+
+
 
 #endif

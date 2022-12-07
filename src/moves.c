@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 18:09:00 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/06 00:19:53 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/07 20:14:07 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,36 @@ void	exit_lost(t_param *param)
 	quit(param);
 }
 
+void	find_player(t_param *param, char *map_path)
+{
+	(void)map_path;
+	int	i_index;
+	int	j_index;
+
+	i_index = 0;
+	while (param->map.path[i_index] != NULL)
+	{
+		j_index = 0;
+		while (param->map.path[i_index][j_index])
+		{
+			if (param->map.path[i_index][j_index] == 'P')
+				break;
+			j_index++;
+		}
+		if (j_index != param->map.width + 1)
+			break ;
+		i_index++;
+	}
+	// printf("player pos : i=%d j=%d\n", i_index, j_index); // TODO remove
+}
+
 void	move_up(t_param *param)
 {
 	int	i;
 	int	j;
 	
-	i = 0;
-	while (param->map.path[i])
-	{
-		j = 0;
-		while (param->map.path[i][j])
-		{
-			if (param->map.path[i][j] == 'P')
-				break;
-			j++;
-		}
-		if (j != param->map.width + 1)
-			break ;
-		i++;
-	}
+	i = param->p_pos.pos_x;
+	j = param->p_pos.pos_y;
 	if (param->map.path[i - 1][j] == 'C')
 		param->count.collectibles++;
 	if (param->map.path[i - 1][j] == 'E' && param->count.total_collectibles == param->count.collectibles)
@@ -70,12 +81,11 @@ void	move_up(t_param *param)
 	{
 		param->map.path[i][j] = '0';
 		param->map.path[i - 1][j] = 'P';
+		param->p_pos.pos_x = i - 1;
+		param->p_pos.pos_y = j;
 		param->count.steps++;
-		ft_putnbr_fd(param->count.steps, 1);
-		ft_putchar_fd('\n', 1);
-		
-		// images_to_map(param->mlx, param->map, param->textures);
-		// images_to_map(param);
+		// ft_putnbr_fd(param->count.steps, 1);
+		// ft_putchar_fd('\n', 1);
 	}
 	
 }
@@ -85,20 +95,8 @@ void	move_down(t_param *param)
 	int	i;
 	int	j;
 	
-	i = 0;
-	while (param->map.path[i])
-	{
-		j = 0;
-		while (param->map.path[i][j])
-		{
-			if (param->map.path[i][j] == 'P')
-				break;
-			j++;
-		}
-		if (j != param->map.width + 1)
-			break ;
-		i++;
-	}
+	i = param->p_pos.pos_x;
+	j = param->p_pos.pos_y;
 	if (param->map.path[i + 1][j] == 'C')
 		param->count.collectibles++;
 	if (param->map.path[i + 1][j] == 'E' && param->count.total_collectibles == param->count.collectibles)
@@ -109,10 +107,11 @@ void	move_down(t_param *param)
 	{
 		param->map.path[i][j] = '0';
 		param->map.path[i + 1][j] = 'P';
+		param->p_pos.pos_x = i + 1;
+		param->p_pos.pos_y = j;
 		param->count.steps++;
-		ft_putnbr_fd(param->count.steps, 1);
-		ft_putchar_fd('\n', 1);
-		// images_to_map(param);
+		// ft_putnbr_fd(param->count.steps, 1);
+		// ft_putchar_fd('\n', 1);
 	}
 }
 
@@ -120,21 +119,9 @@ void	move_right(t_param *param)
 {
 	int	i;
 	int	j;
-	
-	i = 0;
-	while (param->map.path[i])
-	{
-		j = 0;
-		while (param->map.path[i][j])
-		{
-			if (param->map.path[i][j] == 'P')
-				break;
-			j++;
-		}
-		if (j != param->map.width + 1)
-			break ;
-		i++;
-	}
+
+	i = param->p_pos.pos_x;
+	j = param->p_pos.pos_y;	
 	if (param->map.path[i][j + 1] == 'C')
 		param->count.collectibles++;
 	if (param->map.path[i][j + 1] == 'E' && param->count.total_collectibles == param->count.collectibles)
@@ -145,10 +132,11 @@ void	move_right(t_param *param)
 	{
 		param->map.path[i][j] = '0';
 		param->map.path[i][j + 1] = 'P';
+		param->p_pos.pos_x = i;
+		param->p_pos.pos_y = j + 1;
 		param->count.steps++;
-		ft_putnbr_fd(param->count.steps, 1);
-		ft_putchar_fd('\n', 1);
-		// images_to_map(param);
+		// ft_putnbr_fd(param->count.steps, 1);
+		// ft_putchar_fd('\n', 1);
 	}
 }
 
@@ -157,20 +145,8 @@ void	move_left(t_param *param)
 	int	i;
 	int	j;
 	
-	i = 0;
-	while (param->map.path[i])
-	{
-		j = 0;
-		while (param->map.path[i][j])
-		{
-			if (param->map.path[i][j] == 'P')
-				break ;
-			j++;
-		}
-		if (j != param->map.width + 1)
-			break ;
-		i++;
-	}
+	i = param->p_pos.pos_x;
+	j = param->p_pos.pos_y;	
 	if (param->map.path[i][j - 1] == 'C')
 		param->count.collectibles++;
 	if (param->map.path[i][j - 1] == 'E' && param->count.total_collectibles == param->count.collectibles)
@@ -181,14 +157,15 @@ void	move_left(t_param *param)
 	{
 		param->map.path[i][j] = '0';
 		param->map.path[i][j- 1] = 'P';
+		param->p_pos.pos_x = i;
+		param->p_pos.pos_y = j - 1;
 		param->count.steps++;
-		ft_putnbr_fd(param->count.steps, 1);
-		ft_putchar_fd('\n', 1);
-		// images_to_map(param);
+		// ft_putnbr_fd(param->count.steps, 1);
+		// ft_putchar_fd('\n', 1);
 	}
 }
 
-void	ft_my_mlx_string_put(t_param *param)
+void	display_steps_on_screen(t_param *param)
 {
 	char	*str;
 
@@ -209,6 +186,6 @@ int	press_key(int key_code, t_param *param)
 		move_down(param);
 	else if (key_code == KEY_D)
 		move_right(param);
-	print_map(&param->map);
+	// print_map(&param->map);
 	return (0);
 }

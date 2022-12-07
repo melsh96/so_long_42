@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 15:01:44 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/05 20:36:49 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/07 20:33:31 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,14 +186,54 @@ int is_content_valid(t_param *param)
 			}
 			j++;
 		}
-			printf("Here\n");
 		i++;
 	}
 	return (1);
 }
 
-void	check_map(t_param *param)
+// int	check_path(t_param *param, char *map_path)
+// {
+// 	param->map.path = NULL;
+// 	param->map.visited_path = NULL;
+// 	read_map(map_path, param);
+	// path.map = get_map(argv, path.map, vars.map.nb_ligne);
+	// path.visited = get_map(argv, path.visited, vars.map.nb_ligne);
+	// if (path.map == NULL || path.visited == NULL)
+	// 	return (1);
+	// path.count_c = vars.map.count_c;
+	// path.count_e = vars.map.count_e;
+	// path.nb_ligne = vars.map.nb_ligne;
+	// path.size_line = vars.map.size_line;
+	// find_player(&path);
+	// if (try_find_paths(&path) == 1)
+	// 	return (clean_map(path.map), clean_map(path.visited), 1);
+	// return (clean_map(path.map), clean_map(path.visited), 0);
+// }
+
+// int	try_find_paths(t_path *path)
+// {
+// 	while (path->count_c > 0)
+// 	{
+// 		erase_map(&path->visited);
+// 		if (find_path_c(path, path->start.y, path->start.x) == 0)
+// 			path->count_c--;
+// 		else
+// 			return (1);
+// 	}
+// 	while (path->count_e > 0)
+// 	{
+// 		erase_map(&path->visited);
+// 		if (find_path_e(path, path->start.y, path->start.x) == 0)
+// 			path->count_e--;
+// 		else
+// 			return (1);
+// 	}
+// 	return (0);
+// }
+
+void	check_map(t_param *param, char *map_path)
 {
+	// (void)map_path;
 	if (!is_map_rectangular(param))
 		quit(param);
 	if (!are_top_last_walls(param))
@@ -202,6 +242,9 @@ void	check_map(t_param *param)
 		quit(param);
 	if (!is_content_valid(param))
 		quit(param);
+	find_player(param, map_path);
+	// if (!path_finding(param, map_path))
+	// 	quit(param);
 	// check_walls(&param->map);
 	check_params(param);
 }
