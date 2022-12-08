@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 15:01:44 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/07 20:33:31 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:18:41 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,23 +191,26 @@ int is_content_valid(t_param *param)
 	return (1);
 }
 
+
+
 // int	check_path(t_param *param, char *map_path)
 // {
 // 	param->map.path = NULL;
 // 	param->map.visited_path = NULL;
-// 	read_map(map_path, param);
-	// path.map = get_map(argv, path.map, vars.map.nb_ligne);
-	// path.visited = get_map(argv, path.visited, vars.map.nb_ligne);
-	// if (path.map == NULL || path.visited == NULL)
-	// 	return (1);
-	// path.count_c = vars.map.count_c;
-	// path.count_e = vars.map.count_e;
-	// path.nb_ligne = vars.map.nb_ligne;
-	// path.size_line = vars.map.size_line;
-	// find_player(&path);
-	// if (try_find_paths(&path) == 1)
-	// 	return (clean_map(path.map), clean_map(path.visited), 1);
-	// return (clean_map(path.map), clean_map(path.visited), 0);
+// 	get_map(map_path, param);
+// 	get_visited_path(map_path, param);
+// 	path.map = get_map(argv, path.map, vars.map.nb_ligne);
+// 	path.visited = get_map(argv, path.visited, vars.map.nb_ligne);
+// 	if (path.map == NULL || path.visited == NULL)
+// 		return (1);
+// 	path.count_c = vars.map.count_c;
+// 	path.count_e = vars.map.count_e;
+// 	path.nb_ligne = vars.map.nb_ligne;
+// 	path.size_line = vars.map.size_line;
+// 	find_player(&path);
+// 	if (try_find_paths(&path) == 1)
+// 		return (clean_map(path.map), clean_map(path.visited), 1);
+// 	return (clean_map(path.map), clean_map(path.visited), 0);
 // }
 
 // int	try_find_paths(t_path *path)
@@ -247,4 +250,39 @@ void	check_map(t_param *param, char *map_path)
 	// 	quit(param);
 	// check_walls(&param->map);
 	check_params(param);
+}
+
+int	check_arguments(char *av, char *c)
+{
+	int		fd;
+	int		len;
+	char	*tmp;
+	
+	tmp = NULL;
+	len = ft_strlen(av) - 1;
+	if (len < 4)
+		return (1);
+	if (ft_strncmp(av + (len - 3), c, 5) != 0)
+		return (1);
+	fd = open(av, __O_DIRECTORY);
+	if (fd >= 0)
+		return (close(fd), 1);
+	fd = open(av, O_RDONLY);
+	if (fd < 0)
+		return (1);
+	tmp = get_next_line(fd);
+	printf("%s | %p\n", tmp, tmp);
+	if (tmp == NULL)
+		return (close(fd), 1);
+	else
+	{
+		while (tmp != NULL)
+		{
+			free(tmp);
+			tmp = get_next_line(fd);
+		}
+	}
+	tmp = NULL;
+	close(fd);
+	return (0);
 }

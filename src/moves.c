@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 18:09:00 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/07 20:14:07 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:47:15 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	exit_win(t_param *param)
 void	exit_lost(t_param *param)
 {
 	param->count.steps++;
-	ft_putstr_fd("You have been eaten by a Demongorgon !\n", 1);
+	ft_putstr_fd("You have been eaten by a Demogorgon !\n", 1);
 	quit(param);
 }
 
@@ -174,7 +174,7 @@ void	display_steps_on_screen(t_param *param)
 	free(str);
 }
 
-int	press_key(int key_code, t_param *param)
+int	key_press(int key_code, t_param *param)
 {
 	if (key_code == KEY_ESC)
 		quit(param);

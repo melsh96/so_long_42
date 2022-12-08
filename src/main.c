@@ -6,73 +6,18 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:58:41 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/07 20:32:51 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:38:52 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-// int		mlx_string_put(void *mlx_ptr, void *win_ptr, int x, int y, int color, char *string);
-
-static void	freezer(char **tab)
-{
-	size_t	idx;
-
-	idx = 0;
-	while (tab[idx] != NULL)
-	{
-		free(tab[idx]);
-		idx++;
-	}
-	free(tab);
-}
-
-void	texture_freezer(t_param *param, t_textures *tex)
-{
-	mlx_destroy_image(param->mlx.ptr, tex->floor.ptr);
-	mlx_destroy_image(param->mlx.ptr, tex->obstacle.ptr);
-	mlx_destroy_image(param->mlx.ptr, tex->eleven_front.ptr);
-	mlx_destroy_image(param->mlx.ptr, tex->eleven_right.ptr);
-	mlx_destroy_image(param->mlx.ptr, tex->eleven_left.ptr);
-	mlx_destroy_image(param->mlx.ptr, tex->eleven_back.ptr);
-	mlx_destroy_image(param->mlx.ptr, tex->demogorgon_insp.ptr);
-	mlx_destroy_image(param->mlx.ptr, tex->demogorgon_exp.ptr);
-	mlx_destroy_image(param->mlx.ptr, tex->eggo.ptr);
-	mlx_destroy_image(param->mlx.ptr, tex->eggo_left.ptr);
-	mlx_destroy_image(param->mlx.ptr, tex->eggo_right.ptr);
-	mlx_destroy_image(param->mlx.ptr, tex->eggo_side.ptr);
-	mlx_destroy_image(param->mlx.ptr, tex->exit.ptr);
-	mlx_destroy_image(param->mlx.ptr, tex->exit_2.ptr);
-}
-
-int	quit(t_param *param)
-{
-	// mlx_loop_end(param->mlx.ptr);
-	if (param->map.path)
-		freezer(param->map.path);
-	texture_freezer(param, &param->textures);
-	// if (param->img.ptr)
-	// 	free(param->img.ptr);
-	if (param->mlx.window && param->mlx.ptr)
-		mlx_destroy_window(param->mlx.ptr, param->mlx.window);
-	if (param->mlx.ptr)
-	{
-		mlx_destroy_display(param->mlx.ptr);
-		free(param->mlx.ptr);
-	}
-	param->mlx.ptr = NULL;
-	exit(0);
-	return (0);
-}
-
-void	read_map(char *map_path, t_param *param)
+int	read_lines(char *map_path)
 {
 	int		fd;
 	char	*line;
 	int		count_line;
-	int		i;
 
-	i = 0;
 	count_line = 0;
 	fd = open(map_path, O_RDONLY);
 	if (fd < 0)
@@ -90,32 +35,71 @@ void	read_map(char *map_path, t_param *param)
 	}
 	close(fd);
 	free(line);
-	fd = open(map_path, O_RDONLY);
+	return (count_line);
+}
+
+char	**read_map(char *file, t_param *param)
+{
+	char **map_path;
+	int		fd;
+	int		i;
+
+	i = 0;
+	fd = open(file, O_RDONLY);
 	if (fd <= 0)
 	{
 		ft_putstr_fd("Error\nFail to open file\n", 2);
 		quit(param);
 	}
-	param->map.path = malloc(sizeof(char *) * (count_line + 1));
-	if (param->map.path == NULL || fd == -1)
+	map_path = (char **)malloc(sizeof(char *) * (param->map.height + 1));
+	if (map_path == NULL || fd == -1)
 		exit (0);
 	while (1)
 	{
-		param->map.path[i] = get_next_line(fd);
-		if (param->map.path[i] == NULL)
+		map_path[i] = get_next_line(fd);
+		if (map_path[i] == NULL)
 			break ;
 		i++;
 	}
-	// map->path[count_line] = ft_strjoin(map->path[count_line], "\n");
 	close(fd);
+	return (map_path);
+}
 
-	param->map.height = count_line;
+// void	get_visited_path(char **visited_path, t_param *param){
+	
+// }
+
+// void	get_visited_path(char *map_path, char **visited_path,t_param *param)
+// {
+// 	param->map.height = read_lines(map_path);
+// 	if (param->map.height == -1)
+// 	{
+// 		ft_putstr_fd("Error\n", 2);
+// 		quit(param);
+// 	}
+// 	read_map(map_path, param);
+// 	param->map.width = (int)ft_strlen((param->map.path)[0]) - 1;
+// }
+
+void	get_map(char *file, t_param *param)
+{
+	char **map_path;
+
+	param->map.height = read_lines(file);
 	if (param->map.height == -1)
 	{
 		ft_putstr_fd("Error\n", 2);
 		quit(param);
 	}
-	param->map.width = (int)ft_strlen((param->map.path)[0]) - 1;
+	map_path = read_map(file, param);
+	// visiter verifier
+	//free map
+	//si le check il est bon bah on recree
+	//sinon renvoie une erreur
+	param->map.width = (int)ft_strlen((map_path)[0]) - 1;
+	param->map.path = map_path;
+	// param->map.width = (int)ft_strlen((param->map.path)[0]) - 1;
+	// return (map_path);
 }
 
 void	images_to_map(t_param *param)
@@ -164,42 +148,7 @@ void	images_to_map(t_param *param)
 // 	return (true);
 // }
 
-int	check_arguments(char *av, char *c)
-{
-	int		fd;
-	int		len;
-	char	*tmp;
-	
-	tmp = NULL;
-	len = ft_strlen(av) - 1;
-	if (len < 4)
-		return (1);
-	if (ft_strncmp(av + (len - 3), c, 5) != 0)
-		return (1);
-	fd = open(av, __O_DIRECTORY);
-	if (fd >= 0)
-		return (close(fd), 1);
-	fd = open(av, O_RDONLY);
-	if (fd < 0)
-		return (1);
-	tmp = get_next_line(fd);
-	printf("%s | %p\n", tmp, tmp);
-	if (tmp == NULL)
-		return (close(fd), 1);
-	else
-	{
-		while (tmp != NULL)
-		{
-			free(tmp);
-			tmp = get_next_line(fd);
-		}
-	}
-	// else
-	// 	free(tmp);
-	tmp = NULL;
-	close(fd);
-	return (0);
-}
+
 
 int	render(t_param *param)
 {
@@ -215,23 +164,19 @@ int	main(int ac, char **av)
 {
 	t_param		param;
 
-	param.frame = 0;
+	param_init(&param);
 	if (ac != 2 || !av[1] || check_arguments(av[1], ".ber") != 0)
 	{
 		ft_putstr_fd("Error :\nMissing Map !\n", 2);
 		exit(0);
-		// quit(&param);
 	}
-
-	param_init(&param);
 	initialize_game(&param, av[1]);
 	if (param.mlx.window == NULL)
 	{
 		free(param.mlx.window);
 		return (MLX_ERROR);
 	}
-	mlx_hook(param.mlx.window, X_EVENT_KEY_PRESS, 1L << 0, &press_key, &param);
-	// display_steps_on_screen(&param);
+	mlx_hook(param.mlx.window, X_EVENT_KEY_PRESS, 1L << 0, &key_press, &param);
 	mlx_loop_hook(param.mlx.ptr, &render, &param);
 	mlx_hook(param.mlx.window, 17, 1L << 17, &quit, &param);
 	mlx_loop(param.mlx.ptr);

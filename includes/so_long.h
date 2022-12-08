@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:02:15 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/07 20:27:30 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:12:27 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,29 +111,45 @@ typedef struct	s_param
 	t_player_pos	p_pos;
 }				t_param;
 
-int		main(int ac, char **av);
-void	initialize_img(t_textures *textures, t_mlx *mlx);
-char	*alloc_without_new_line(const char *s1);
-char	*join_without_new_line(char *s1, char *s2);
-int		press_key(int key_code, t_param *param);
-void	move_left(t_param *param);
-void	move_right(t_param *param);
-void	move_down(t_param *param);
-// void	move_up(t_map *map, t_count *count, t_mlx *mlx, t_textures *textures);
-void	move_up(t_param *param);
-void	initialize_game(t_param	*param, char *map_path);
-int		quit(t_param *param);
-void	param_init(t_param *param);
-void	read_map(char *map_path, t_param *param);
-// void	images_to_map(t_mlx *mlx, t_map *map, t_textures *textures);
-void	images_to_map(t_param *param);
-void	check_walls(t_map *map);
-// void	check_params(t_map *map, t_count *count);
-void	check_params(t_param *param);
-void	check_map(t_param *param, char *map_path);
-void	display_steps_on_screen(t_param *param);
-int		check_arguments(char *av, char *c);
-// void	find_player(t_param *param, int i, int j);
-void	find_player(t_param *param, char *map_path);
+void		check_params(t_param *param);
+int			is_map_rectangular(t_param *param);
+char 		*top_walls(t_param *param);
+char 		*down_walls(t_param *param);
+int			are_right_left_walls(t_param *param);
+int 		are_top_last_walls(t_param *param);
+int 		is_content_valid(t_param *param);
+void		check_map(t_param *param, char *map_path);
+
+void		param_init(t_param *param);
+void		initialize_img(t_textures *textures, t_mlx *mlx);
+void		init_player_pos(t_param *param);
+void		initialize_game(t_param	*param, char *map_path);
+
+// static void	freezer(char **tab);
+void		texture_freezer(t_param *param, t_textures *tex);
+int			quit(t_param *param);
+int			read_lines(char *map_path);
+// void		read_map(char *map_path, t_param *param);
+// char		**read_map(char *file, char **map_path, t_param *param);
+char		**read_map(char *file, t_param *param);
+// void		get_map(char *map_path, t_param *param);
+// void		get_map(char *file, char **map_path, t_param *param);
+void		get_map(char *file, t_param *param);
+
+void		images_to_map(t_param *param);
+int			check_arguments(char *av, char *c);
+int			render(t_param *param);
+int			main(int ac, char **av);
+
+void		print_map(t_map *map);
+void		exit_win(t_param *param);
+void		exit_lost(t_param *param);
+void		find_player(t_param *param, char *map_path);
+void		move_up(t_param *param);
+void		move_down(t_param *param);
+void		move_right(t_param *param);
+void		move_left(t_param *param);
+void		display_steps_on_screen(t_param *param);
+int			key_press(int key_code, t_param *param);
 
 #endif

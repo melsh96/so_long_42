@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 18:04:23 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/07 18:52:00 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:31:23 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@ void	param_init(t_param *param)
 	param->y = 4;
 	param->i = 0;
 	param->j = 0;
+	param->frame = 0;
 	param->count.steps = 0;
 	param->mlx.ptr = NULL;
-	param->mlx.window = NULL;
-	param->map.path = NULL;
 	param->img.ptr = NULL;
+	param->map.path = NULL;
+	param->mlx.window = NULL;
 }
 
 void	initialize_img(t_textures *textures, t_mlx *mlx)
@@ -89,8 +90,11 @@ void	init_player_pos(t_param *param)
 	param->p_pos.pos_y = j_index;
 }
 
-void	initialize_game(t_param	*param, char *map_path)
+void	initialize_game(t_param	*param, char *file_path)
 {
+	// t_map	map;
+
+	// map.path = NULL;
 	param->mlx.ptr = mlx_init();
 	if (!param->mlx.ptr)
 	{
@@ -98,9 +102,11 @@ void	initialize_game(t_param	*param, char *map_path)
 		exit(0);
 	}
 	initialize_img(&param->textures, &param->mlx);
-	read_map(map_path, param);
+	get_map(file_path, param);
+	// if (map.path == NULL)
+	// 	quit(param);
 	init_player_pos(param);
-	check_map(param, map_path);
+	check_map(param, file_path);
 	param->mlx.window = mlx_new_window(param->mlx.ptr, param->map.width * 64, param->map.height * 64, "so_long");
 	images_to_map(param);
 }
