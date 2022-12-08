@@ -6,12 +6,12 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:02:15 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/08 17:12:27 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:45:23 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
-#define SO_LONG_H
+# define SO_LONG_H
 
 # include <stdlib.h>
 # include <stdio.h>
@@ -33,61 +33,59 @@
 # define KEY_S					115
 # define KEY_D					100
 
+// # define NULL NULL
+
 typedef enum e_bool
 {
 	true = 0,
 	false = 1
-}			t_bool;
+}					t_bool;
 
-typedef struct	s_mlx
+typedef struct s_mlx
 {
-	void	*ptr;
-	void	*window;
-}			t_mlx;
+	void			*ptr;
+	void			*window;
+}					t_mlx;
 
-typedef struct	s_map
+typedef struct s_map
 {
-	// int		col;
-	// int		line;
-	// char	*path;
-	char	**path;
-	char	**visited_path;
-	int 	width;
-	int 	height;
-}			t_map;
+	char			**path;
+	char			**visited_path;
+	int				width;
+	int				height;
+	char			*last_wall;
+	char			*first_wall;
+}					t_map;
 
 typedef struct s_img
 {
-	void	*ptr;
-	// int		*data;
-	int 	width;
-	int 	height;
-}			t_img;
+	void			*ptr;
+	int				width;
+	int				height;
+}					t_img;
 
-typedef struct	s_textures
+typedef struct s_textures
 {
-	t_img	floor;
-	t_img	obstacle;
-	t_img	eleven_front;
-	t_img	eleven_left;
-	t_img	eleven_right;
-	t_img	eleven_back;
-	t_img	demogorgon_exp;
-	t_img	demogorgon_insp;
-	t_img	eggo;
-	t_img	eggo_left;
-	t_img	eggo_side;
-	t_img	eggo_right;
-	t_img	exit_2;
-	t_img	exit;
-}			t_textures;
+	t_img			floor;
+	t_img			obstacle;
+	t_img			eleven_front;
+	t_img			demogorgon_exp;
+	t_img			demogorgon_insp;
+	t_img			eggo;
+	t_img			eggo_left;
+	t_img			eggo_side;
+	t_img			eggo_right;
+	t_img			exit;
+}					t_textures;
 
-typedef struct	s_count
+typedef struct s_count
 {
-	int		total_collectibles;
-	int		collectibles;
-	int		steps;
-}				t_count;
+	int				total_collectibles;
+	int				collectibles;
+	int				steps;
+	int				exit;
+	int				player;
+}					t_count;
 
 typedef struct s_player_pos
 {
@@ -95,29 +93,28 @@ typedef struct s_player_pos
 	unsigned int	pos_y;
 }	t_player_pos;
 
-
-typedef struct	s_param
+typedef struct s_param
 {
-	int			x;
-	int			y;
-	int			i;
-	int			j;
-	int			frame;
-	t_mlx		mlx;
-	t_map		map;
-	t_img		img;
-	t_textures	textures;
-	t_count		count;
+	int				x;
+	int				y;
+	int				i;
+	int				j;
+	int				frame;
+	t_mlx			mlx;
+	t_map			map;
+	t_img			img;
+	t_textures		textures;
+	t_count			count;
 	t_player_pos	p_pos;
-}				t_param;
+}					t_param;
 
 void		check_params(t_param *param);
 int			is_map_rectangular(t_param *param);
-char 		*top_walls(t_param *param);
-char 		*down_walls(t_param *param);
+char		*top_walls(t_param *param);
+char		*down_walls(t_param *param);
 int			are_right_left_walls(t_param *param);
-int 		are_top_last_walls(t_param *param);
-int 		is_content_valid(t_param *param);
+int			are_top_last_walls(t_param *param);
+int			is_content_valid(t_param *param);
 void		check_map(t_param *param, char *map_path);
 
 void		param_init(t_param *param);
@@ -151,5 +148,8 @@ void		move_right(t_param *param);
 void		move_left(t_param *param);
 void		display_steps_on_screen(t_param *param);
 int			key_press(int key_code, t_param *param);
+
+void		free_walls(t_param *param);
+void		read_free_all_gnl(char *tmp, int fd);
 
 #endif

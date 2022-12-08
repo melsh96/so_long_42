@@ -6,7 +6,7 @@
 #    By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/07 17:58:22 by meshahrv          #+#    #+#              #
-#    Updated: 2022/12/08 18:36:16 by meshahrv         ###   ########.fr        #
+#    Updated: 2022/12/08 19:40:24 by meshahrv         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,12 @@ CFLAGS		= -Wall -Werror -Wextra -MMD -MP -g3
 SRC = main.c \
 		init.c \
 		quit.c \
+		walls.c \
 		utils.c \
 		moves.c \
+		get_map.c \
 		checkers.c \
+		print_utils.c \
 		pathfinding.c \
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
