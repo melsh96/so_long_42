@@ -6,13 +6,13 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:32:11 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/08 19:42:31 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/08 20:26:03 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-static void	freezer(char **tab)
+void	freezer(char **tab)
 {
 	size_t	idx;
 

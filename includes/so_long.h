@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:02:15 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/08 19:45:23 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/08 20:26:13 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,9 @@ int			key_press(int key_code, t_param *param);
 
 void		free_walls(t_param *param);
 void		read_free_all_gnl(char *tmp, int fd);
+char		**read_visited_path(char *file, t_param *param);
+void		get_visited_path(char *file, t_param *param);
+
+void		freezer(char **tab);
 
 #endif

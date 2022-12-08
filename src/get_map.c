@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:57:09 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/08 19:49:38 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/08 20:01:02 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,6 @@ char	**read_map(char *file, t_param *param)
 	return (map_path);
 }
 
-// void	get_visited_path(char **visited_path, t_param *param){
-
-// }
-
-// void	get_visited_path(char *map_path, char **visited_path,t_param *param)
-// {
-// 	param->map.height = read_lines(map_path);
-// 	if (param->map.height == -1)
-// 	{
-// 		ft_putstr_fd("Error\n", 2);
-// 		quit(param);
-// 	}
-// 	read_map(map_path, param);
-// 	param->map.width = (int)ft_strlen((param->map.path)[0]) - 1;
-// }
-
 void	get_map(char *file, t_param *param)
 {
 	char	**map_path;
@@ -100,3 +84,24 @@ void	get_map(char *file, t_param *param)
 	//free map
 	//si le check il est bon bah on recree
 	//sinon renvoie une erreur
+
+// int	try_find_paths(t_path *path)
+// {
+// 	while (path->count_c > 0)
+// 	{
+// 		erase_map(&path->visited);
+// 		if (find_path_c(path, path->start.y, path->start.x) == 0)
+// 			path->count_c--;
+// 		else
+// 			return (1);
+// 	}
+// 	while (path->count_e > 0)
+// 	{
+// 		erase_map(&path->visited);
+// 		if (find_path_e(path, path->start.y, path->start.x) == 0)
+// 			path->count_e--;
+// 		else
+// 			return (1);
+// 	}
+// 	return (0);
+// }
