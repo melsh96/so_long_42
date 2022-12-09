@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 18:06:25 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/08 19:49:07 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/09 22:36:13 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ void	find_player(t_param *param, char *map_path)
 		while (param->map.path[i_index][j_index])
 		{
 			if (param->map.path[i_index][j_index] == 'P')
+			{
+				param->p_pos.pos_x = i_index;
+				param->p_pos.pos_y = j_index;
 				break ;
+			}
 			j_index++;
 		}
 		if (j_index != param->map.width + 1)

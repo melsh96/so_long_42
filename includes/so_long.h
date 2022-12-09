@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 18:02:15 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/08 20:26:13 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/09 22:40:34 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ typedef struct s_count
 {
 	int				total_collectibles;
 	int				collectibles;
+	int				c_cpy;
+	int				e_cpy;
 	int				steps;
 	int				exit;
 	int				player;
@@ -89,8 +91,8 @@ typedef struct s_count
 
 typedef struct s_player_pos
 {
-	unsigned int	pos_x;
-	unsigned int	pos_y;
+	int	pos_x;
+	int	pos_y;
 }	t_player_pos;
 
 typedef struct s_param
@@ -118,19 +120,14 @@ int			is_content_valid(t_param *param);
 void		check_map(t_param *param, char *map_path);
 
 void		param_init(t_param *param);
-void		initialize_img(t_textures *textures, t_mlx *mlx);
+void		initialize_img(t_textures *textures, t_mlx *mlx, t_param *param);
 void		init_player_pos(t_param *param);
 void		initialize_game(t_param	*param, char *map_path);
 
-// static void	freezer(char **tab);
 void		texture_freezer(t_param *param, t_textures *tex);
 int			quit(t_param *param);
 int			read_lines(char *map_path);
-// void		read_map(char *map_path, t_param *param);
-// char		**read_map(char *file, char **map_path, t_param *param);
 char		**read_map(char *file, t_param *param);
-// void		get_map(char *map_path, t_param *param);
-// void		get_map(char *file, char **map_path, t_param *param);
 void		get_map(char *file, t_param *param);
 
 void		images_to_map(t_param *param);
@@ -138,7 +135,6 @@ int			check_arguments(char *av, char *c);
 int			render(t_param *param);
 int			main(int ac, char **av);
 
-void		print_map(t_map *map);
 void		exit_win(t_param *param);
 void		exit_lost(t_param *param);
 void		find_player(t_param *param, char *map_path);
@@ -155,5 +151,11 @@ char		**read_visited_path(char *file, t_param *param);
 void		get_visited_path(char *file, t_param *param);
 
 void		freezer(char **tab);
+void		print_map(t_param *param);
+int			check_path(t_param *param, char *map_path);
+
+void		which_textures_2(t_param *param, int i, int j);
+void		which_textures_1(t_param *param, int i, int j);
+void		print_visited_map(t_param *param);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 18:57:09 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/08 20:01:02 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/09 22:35:49 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,29 +79,3 @@ void	get_map(char *file, t_param *param)
 	param->map.width = (int)ft_strlen((map_path)[0]) - 1;
 	param->map.path = map_path;
 }
-
-	// visiter verifier
-	//free map
-	//si le check il est bon bah on recree
-	//sinon renvoie une erreur
-
-// int	try_find_paths(t_path *path)
-// {
-// 	while (path->count_c > 0)
-// 	{
-// 		erase_map(&path->visited);
-// 		if (find_path_c(path, path->start.y, path->start.x) == 0)
-// 			path->count_c--;
-// 		else
-// 			return (1);
-// 	}
-// 	while (path->count_e > 0)
-// 	{
-// 		erase_map(&path->visited);
-// 		if (find_path_e(path, path->start.y, path->start.x) == 0)
-// 			path->count_e--;
-// 		else
-// 			return (1);
-// 	}
-// 	return (0);
-// }

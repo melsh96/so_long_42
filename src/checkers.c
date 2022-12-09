@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 15:01:44 by meshahrv          #+#    #+#             */
-/*   Updated: 2022/12/08 19:54:38 by meshahrv         ###   ########.fr       */
+/*   Updated: 2022/12/09 21:06:39 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,25 @@ void	check_params(t_param *param)
 	{
 		ft_putstr_fd("Error\n", 2);
 		ft_putstr_fd("This map has no exit, put only one !\n", 2);
-		exit(0);
+		quit(param);
 	}
 	else if (param->count.exit != 1)
 	{
 		ft_putstr_fd("Error\n", 2);
 		ft_putstr_fd("Ther is too many exits !\n", 2);
-		exit(0);
+		quit(param);
 	}
 	else if (param->count.total_collectibles == 0)
 	{
 		ft_putstr_fd("Error\n", 2);
 		ft_putstr_fd("This map has no collectibles, put at least one !\n", 2);
-		exit(0);
+		quit(param);
 	}
 	else if (param->count.player != 1)
 	{
 		ft_putstr_fd("Error\n", 2);
 		ft_putstr_fd("No or too much player has been detected ...\n", 2);
-		exit(0);
+		quit(param);
 	}
 }
 
@@ -106,8 +106,10 @@ void	check_map(t_param *param, char *map_path)
 		quit(param);
 	if (!is_content_valid(param))
 		quit(param);
-	find_player(param, map_path);
 	check_params(param);
+	find_player(param, map_path);
+	if (!check_path(param, map_path))
+		quit(param);
 }
 
 	// if (!path_finding(param, map_path))

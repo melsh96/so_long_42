@@ -6,7 +6,7 @@
 #    By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/07 17:58:22 by meshahrv          #+#    #+#              #
-#    Updated: 2022/12/08 19:40:24 by meshahrv         ###   ########.fr        #
+#    Updated: 2022/12/09 22:40:58 by meshahrv         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SRC = main.c \
 		checkers.c \
 		print_utils.c \
 		pathfinding.c \
+		init_textures.c \
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:.c=.o)
